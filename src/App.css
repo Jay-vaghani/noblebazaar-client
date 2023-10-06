@@ -1,0 +1,37 @@
+.banner {
+  height: 80vh;
+  background: url("./images/Banner.png") center / cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+.banner-font-1 {
+  transform: translateX(-7%);
+}
+
+.abc {
+  display: flex;
+  justify-content: center;
+  font-size: clamp(2rem, 9vw, 5rem);
+  color: #fff;
+  font-weight: 900;
+}
+
+.banner-font-2 {
+
+  transform: translateX(7%);
+}
+
+@media (max-width: 600px) {
+  .banner {
+    height: 50vh;
+  }
+}
+
+@media (max-width: 400px) {
+  .banner {
+    height: 40vh;
+  }
+}

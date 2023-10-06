@@ -8,6 +8,7 @@ import {
   Orders,
   Profile,
   Register,
+  ScrollTop,
 } from "./components";
 import { Box } from "@mui/material";
 
@@ -15,7 +16,7 @@ function App() {
   return (
     <Box>
       <NavBar />
-      <Box px={1.3}>
+      <Box>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
@@ -25,6 +26,7 @@ function App() {
           <Route path="/orders" element={<Orders />} />
         </Routes>
       </Box>
+      <ScrollTop />
     </Box>
   );
 }

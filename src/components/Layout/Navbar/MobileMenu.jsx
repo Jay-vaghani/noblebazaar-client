@@ -3,10 +3,11 @@ import {
   Close,
   Home,
   Logout,
-  MenuRounded,
   Person,
   PersonAddAlt1,
   VpnKey,
+  MenuRounded,
+  ShoppingCartRounded,
 } from "@mui/icons-material";
 import Button from "@mui/material/Button";
 
@@ -32,8 +33,13 @@ function MobileMenu() {
 
   return (
     <>
-      <Button disableRipple onClick={() => setOpen(!open)}>
-        <MenuRounded fontSize="large" sx={{ color: "#003aff" }} />
+      <Button
+        onClick={() => setOpen(!open)}
+        sx={{
+          px: 0,
+        }}
+      >
+        <MenuRounded fontSize="large" sx={{ color: "#0080fb" }} />
       </Button>
 
       <SwipeableDrawer
@@ -52,13 +58,15 @@ function MobileMenu() {
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <Typography variant="h5">Menu</Typography>
+          <Typography variant="h5" fontWeight={500}>
+            Menu
+          </Typography>
           <Button
             disableRipple
             onClick={() => setOpen(!open)}
             sx={{ display: "flex", justifyContent: "end" }}
           >
-            <Close fontSize="large" sx={{ color: "#003aff" }} />
+            <Close fontSize="large" sx={{ color: "#0080fb" }} />
           </Button>
         </Box>
         <List sx={{ width: "200px" }}>
@@ -66,29 +74,35 @@ function MobileMenu() {
             link={"/"}
             name="Home"
             drawerFunction={drawerFunction}
-            icon={<Home fontSize="medium" sx={{ color: "#003aff" }} />}
+            icon={<Home fontSize="medium" sx={{ color: "#0080fb" }} />}
           />
           <ListItemButtonNav
             link={"/profile"}
             name="Profile"
             drawerFunction={drawerFunction}
-            icon={<Person fontSize="medium" sx={{ color: "#003aff" }} />}
+            icon={<Person fontSize="medium" sx={{ color: "#0080fb" }} />}
           />
           <ListItemButtonNav
             link={"/login"}
             name="Login"
             drawerFunction={drawerFunction}
-            icon={<VpnKey fontSize="medium" sx={{ color: "#003aff" }} />}
+            icon={<VpnKey fontSize="medium" sx={{ color: "#0080fb" }} />}
           />
           <ListItemButtonNav
             link={"/register"}
             name="Register"
             drawerFunction={drawerFunction}
-            icon={<PersonAddAlt1 fontSize="medium" sx={{ color: "#003aff" }} />}
+            icon={<PersonAddAlt1 fontSize="medium" sx={{ color: "#0080fb" }} />}
+          />
+          <ListItemButtonNav
+            link={"/cart"}
+            name="cart"
+            drawerFunction={drawerFunction}
+            icon={<ShoppingCartRounded fontSize="medium" sx={{ color: "#0080fb" }} />}
           />
           <ListItemButton>
             <ListItemIcon>
-              <Logout fontSize="medium" sx={{ color: "#003aff" }} />
+              <Logout fontSize="medium" sx={{ color: "#0080fb" }} />
             </ListItemIcon>
             <Typography variant="h6">Logout</Typography>
           </ListItemButton>

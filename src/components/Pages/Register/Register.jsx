@@ -129,9 +129,9 @@ function Register() {
                       position="end"
                     >
                       {showPassword ? (
-                        <VisibilityOff sx={{ color: "#003aff" }} />
+                        <Visibility sx={{ color: "#0080fb" }} />
                       ) : (
-                        <Visibility sx={{ color: "#003aff" }} />
+                        <VisibilityOff sx={{ color: "#0080fb" }} />
                       )}
                     </InputAdornment>
                   ),
@@ -148,7 +148,7 @@ function Register() {
                 loadingPosition="end"
                 variant="contained"
                 fullWidth
-                sx={{ bgcolor: "#003aff" }}
+                sx={{ bgcolor: "#0080fb" }}
               >
                 login
               </LoadingButton>

@@ -6,6 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 import {
   Box,
   Button,
+  CircularProgress,
   Grid,
   InputAdornment,
   Stack,
@@ -49,8 +50,6 @@ function Login() {
         toast.error(error.response.data.message);
         console.log(error);
       });
-
-
   };
 
   return (
@@ -103,9 +102,9 @@ function Login() {
                       position="end"
                     >
                       {showPassword ? (
-                        <VisibilityOff sx={{ color: "#003aff" }} />
+                        <Visibility sx={{ color: "#0080fb" }} />
                       ) : (
-                        <Visibility sx={{ color: "#003aff" }} />
+                        <VisibilityOff sx={{ color: "#0080fb" }} />
                       )}
                     </InputAdornment>
                   ),
@@ -122,7 +121,7 @@ function Login() {
                 loadingPosition="end"
                 variant="contained"
                 fullWidth
-                sx={{ bgcolor: "#003aff" }}
+                sx={{ bgcolor: "#0080fb" }}
               >
                 login
               </LoadingButton>
