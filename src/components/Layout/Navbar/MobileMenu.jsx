@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Close,
   Home,
@@ -21,14 +21,29 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ListItemButtonNav from "./ListItemButton";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../../Features/authentication/authenticationSlice";
+import axios from "axios";
 
 function MobileMenu() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const drawerFunction = (link) => {
     setOpen(!open);
     navigate(link);
+  };
+
+  const handelLogout = async () => {
+    // drawerFunction();
+    const data = await fetch("https://noblebazaar.onrender.com/user/logout", {
+      credentials: "include",
+    });
+
+    const res = await data.json();
+
+    console.log(res);
   };
 
   return (
@@ -98,9 +113,14 @@ function MobileMenu() {
             link={"/cart"}
             name="cart"
             drawerFunction={drawerFunction}
-            icon={<ShoppingCartRounded fontSize="medium" sx={{ color: "#0080fb" }} />}
+            icon={
+              <ShoppingCartRounded
+                fontSize="medium"
+                sx={{ color: "#0080fb" }}
+              />
+            }
           />
-          <ListItemButton>
+          <ListItemButton onClick={handelLogout}>
             <ListItemIcon>
               <Logout fontSize="medium" sx={{ color: "#0080fb" }} />
             </ListItemIcon>

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import React, { useMemo, useState } from "react";
+import { SendRounded, Visibility, VisibilityOff } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import {
   Box,
   Button,
@@ -10,13 +10,19 @@ import {
   InputAdornment,
   Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { useRegisterUserMutation } from "../authenticationApi";
+import { useDispatch } from "react-redux";
+import { setUser } from "../authenticationSlice";
 
 function Register() {
   const [showPassword, setShowPassword] = useState(false);
-  const [submitState, setSubmitState] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const form = useForm({
     defaultValues: {
@@ -26,44 +32,36 @@ function Register() {
     },
   });
 
-  const { handleSubmit, register, formState, control } = form;
-  let { errors, isDirty, isValid } = formState;
+  const { handleSubmit, register, formState } = form;
+  let { errors, isDirty } = formState;
+
+  const [registerUser, { data, isLoading, isSuccess, error, isError }] =
+    useRegisterUserMutation();
+
+  const memorizeNotification = useMemo(() => {
+    isSuccess ? toast.success("Login Successful") : "";
+    isError ? toast.error(error.data.message) : "";
+  }, [isSuccess, isError]);
+
+  if (isSuccess) {
+    dispatch(setUser(data));
+    navigate("/");
+  }
 
   const handelRegisterSubmit = async (formData) => {
-    setSubmitState(true);
-    const { data } = await axios
-      .post(
-        "https://noblebazaar.onrender.com/user/register",
-        {
-          ...formData,
-          avatar: {
-            public_id: "test",
-            url: "test",
-          },
-        },
-        {
-          withCredentials: true,
-        }
-      )
-      .then(() => {
-        setSubmitState(false);
-        toast.success("Register Successfully");
-      })
-      .catch((error) => {
-        setSubmitState(false);
-        if (error.response.data.message === "Duplicate email entered") {
-          toast.error("Email Already Exist");
-        }
-        console.log(error.response.data.message);
-      });
-
-    setSubmitState(false);
+    registerUser({
+      ...formData,
+      avatar: {
+        public_id: "Test",
+        url: "Test",
+      },
+    });
   };
 
   return (
     <>
       <form action="" onSubmit={handleSubmit(handelRegisterSubmit)}>
-        <Stack alignItems={"center"} mt={10} spacing={2}>
+        <Stack alignItems={"center"} mt={15} spacing={2}>
           <Grid container justifyContent={"center"}>
             <Grid item xs={10} sm={7} md={5} lg={5} xl={4}>
               <TextField
@@ -142,10 +140,11 @@ function Register() {
           <Grid container justifyContent={"center"}>
             <Grid item xs={10} sm={7} md={5} lg={5} xl={4}>
               <LoadingButton
-                disabled={!isDirty || !isValid || submitState}
+                disabled={!isDirty}
                 type="submit"
-                loading={submitState}
+                loading={isLoading}
                 loadingPosition="end"
+                endIcon={<SendRounded />}
                 variant="contained"
                 fullWidth
                 sx={{ bgcolor: "#0080fb" }}
@@ -154,9 +153,19 @@ function Register() {
               </LoadingButton>
             </Grid>
           </Grid>
+          <Typography
+            variant="body1"
+            textAlign={"center"}
+            textTransform={"uppercase"}
+            mt={3}
+          >
+            Already have Account{" "}
+            <Link to={"/login"} style={{ color: "#0080fb" }}>
+              Login
+            </Link>
+          </Typography>
         </Stack>
       </form>
-      <Toaster />
     </>
   );
 }

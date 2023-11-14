@@ -1,11 +1,12 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import React from "react";
 import MobileMenu from "./MobileMenu";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { NavLinksArray } from "./NavLinks";
 import SearchBar from "./SearchBar";
 
 function NavBar() {
+  const navigate = useNavigate();
   return (
     <>
       <Box
@@ -24,15 +25,17 @@ function NavBar() {
         left={0}
         bgcolor={"white"}
       >
-        <Typography
-          variant="h5"
-          fontWeight={600}
-          fontSize={26}
-          color={"#0080fb"}
-          pl={1.3}
-        >
-          Noble Bazaar
-        </Typography>
+        <Button variant="text" onClick={() => navigate("/")}>
+          <Typography
+            variant="h5"
+            fontWeight={600}
+            fontSize={26}
+            color={"#0080fb"}
+            pl={1.3}
+          >
+            Noble Bazaar
+          </Typography>
+        </Button>
         <Box
           width={"60%"}
           display={{

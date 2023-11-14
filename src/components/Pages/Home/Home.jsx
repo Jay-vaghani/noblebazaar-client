@@ -1,7 +1,7 @@
 import { Box, Grid, Stack } from "@mui/material";
 import React from "react";
 import SearchBar from "../../Layout/Navbar/SearchBar";
-import ProductComponent from "../../ProductComponent";
+import ProductCardComponent from "../../../Features/Products/components/ProductCardComponent";
 
 function Home() {
   return (
@@ -20,56 +20,7 @@ function Home() {
         <h1 className="banner-font-2 abc">Ecommerce</h1>
       </div>
       <Grid container spacing={3} justifyContent={"start"} px={2} my={2}>
-        <Grid item xs={12} sm={6} md={4} lg={3}>
-          <Box>
-            <ProductComponent />
-          </Box>
-        </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={3}>
-          <Box>
-            <ProductComponent />
-          </Box>
-        </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={3}>
-          <Box>
-            <ProductComponent />
-          </Box>
-        </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={3}>
-          <Box>
-            <ProductComponent />
-          </Box>
-        </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={3}>
-          <Box>
-            <ProductComponent />
-          </Box>
-        </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={3}>
-          <Box>
-            <ProductComponent />
-          </Box>
-        </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={3}>
-          <Box>
-            <ProductComponent />
-          </Box>
-        </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={3}>
-          <Box>
-            <ProductComponent />
-          </Box>
-        </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={3}>
-          <Box>
-            <ProductComponent />
-          </Box>
-        </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={3}>
-          <Box>
-            <ProductComponent />
-          </Box>
-        </Grid>
+        <ProductCardComponent />
       </Grid>
     </Box>
   );

@@ -1,8 +1,8 @@
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import { DevTool } from "@hookform/devtools";
-import toast, { Toaster } from "react-hot-toast";
+import { useLoginUserMutation } from "../authenticationApi";
 
+import { SendRounded, Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -11,14 +11,24 @@ import {
   InputAdornment,
   Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import axios from "axios";
-import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+import toast, { Toaster } from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { setUser } from "../authenticationSlice";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [submitState, setSubmitState] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    
+  })
 
   const form = useForm({
     defaultValues: {
@@ -27,35 +37,30 @@ function Login() {
     },
   });
 
-  const { handleSubmit, register, formState, control } = form;
+  const { handleSubmit, register, formState } = form;
   const { errors, isDirty, isValid, isSubmitting } = formState;
 
-  const handelLoginSubmit = async (formData) => {
-    setSubmitState(true);
+  const [loginUser, { data, isError, isLoading, isSuccess, status, error }] =
+    useLoginUserMutation();
 
-    const { data } = await axios
-      .post(
-        "https://noblebazaar.onrender.com/user/login",
-        { ...formData },
-        {
-          withCredentials: true,
-        }
-      )
-      .then(() => {
-        setSubmitState(false);
-        toast.success("Login Successfully");
-      })
-      .catch((error) => {
-        setSubmitState(false);
-        toast.error(error.response.data.message);
-        console.log(error);
-      });
+  const memorizeNotification = useMemo(() => {
+    isSuccess ? toast.success("Login Successful") : "";
+    isError ? toast.error(error.data.message) : "";
+  }, [isSuccess, isError]);
+
+  if (isSuccess) {
+    dispatch(setUser(data.user));
+    navigate("/");
+  }
+
+  const handelLoginSubmit = async (formData) => {
+    loginUser(formData);
   };
 
   return (
     <>
       <form action="" onSubmit={handleSubmit(handelLoginSubmit)}>
-        <Stack alignItems={"center"} mt={10} spacing={2}>
+        <Stack alignItems={"center"} mt={15} spacing={2}>
           <Grid container justifyContent={"center"}>
             <Grid item xs={10} sm={7} md={5} lg={5} xl={4}>
               <TextField
@@ -115,10 +120,11 @@ function Login() {
           <Grid container justifyContent={"center"}>
             <Grid item xs={10} sm={7} md={5} lg={5} xl={4}>
               <LoadingButton
-                disabled={!isDirty || !isValid || submitState}
+                disabled={!isDirty}
                 type="submit"
-                loading={submitState}
+                loading={isLoading}
                 loadingPosition="end"
+                endIcon={<SendRounded />}
                 variant="contained"
                 fullWidth
                 sx={{ bgcolor: "#0080fb" }}
@@ -127,11 +133,21 @@ function Login() {
               </LoadingButton>
             </Grid>
           </Grid>
+          <Typography
+            variant="body1"
+            textAlign={"center"}
+            textTransform={"uppercase"}
+            mt={3}
+          >
+            Don't Have Account yet{" "}
+            <Link to={"/register"} style={{ color: "#0080fb" }}>
+              Register
+            </Link>
+          </Typography>
         </Stack>
       </form>
-      <Toaster />
     </>
   );
 }
 
-export default Login;
+export default memo(Login);

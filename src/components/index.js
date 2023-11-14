@@ -1,9 +1,9 @@
 export { default as NavBar } from "./Layout/Navbar/NavBar";
 export { default as Home } from "./Pages/Home/Home";
-export { default as Login } from "./Pages/Login/Login";
+export { default as Login } from "../Features/authentication/components/LoginForm";
 export { default as Profile } from "./Pages/Profile/Profile";
-export { default as Register } from "./Pages/Register/Register";
+export { default as Register } from "../Features/authentication/components/RegistrationForm";
 export { default as Cart } from "./Pages/Cart/Cart";
 export { default as Orders } from "./Pages/Orders/Orders";
-export { default as ProductComponent } from "./ProductComponent";
+export { default as ProductComponent } from "../Features/Products/components/ProductCardComponent";
 export { default as ScrollTop } from "./ScrollTop";
